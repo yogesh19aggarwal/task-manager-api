@@ -25,7 +25,6 @@ Task.belongsTo(User, { foreignKey: 'userId' });
 
 const db = {
   sequelize,
-  Sequelize,
   User,
   Task,
 };
