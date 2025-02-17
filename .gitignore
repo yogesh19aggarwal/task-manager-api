@@ -1,0 +1,29 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+
+# Logs
+logs
+*.log
+logs/*
+
+# dotenv environment variables
+.env
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+migrations/
+
+# Compiled files
+dist/
+build/
+
+.vscode/
+
+# Git-related
+.git/
+
+.eslintcache
