@@ -10,7 +10,7 @@ const config = configData[env];
 const sequelize = new Sequelize(config.database, config.username, config.password, {
   host: config.host,
   dialect: config.dialect,
-  port:config.dbPort
+  port:config.port
 });
 
 const User = UserModel(sequelize, Sequelize.DataTypes);
@@ -20,8 +20,6 @@ User.hasMany(Task, { foreignKey: 'userId', as: 'tasks' });
 Task.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 const db = {
-  sequelize,
-  Sequelize,
   User,
   Task,
 };
@@ -32,7 +30,6 @@ const db = {
     console.log('Database connected');
   } catch(err){
     console.log('Failed to connect to the database', err.message);
-    
   }
 })();
 

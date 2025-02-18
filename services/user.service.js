@@ -4,7 +4,7 @@ import db from '../models/index.js'
 
 const User = db.User;
 
-export const createUser = async (inputData) => {
+export const createUser = async (inputData, next) => {
     const { username, email, password } = inputData;
 
     if (!username || !email || !password) {
@@ -26,6 +26,6 @@ export const createUser = async (inputData) => {
         });
     }
     catch(err){
-        console.log('Error in userService',err);
+        next(err);
     }
 };
