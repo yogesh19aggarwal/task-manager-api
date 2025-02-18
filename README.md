@@ -32,6 +32,9 @@ DB_PASSWORD=your_database_password
 DB_NAME=your_database_name 
 DB_HOST=your_database_host DB_PORT=your_database_port
 PORT=your_server_port
+DB_DIALECT=your database dialect
+DB_PORT=your database port
+NODE_ENV=environement
 
 JWT_SECRET=your_jwt_secret
 ```
