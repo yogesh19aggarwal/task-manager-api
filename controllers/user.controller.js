@@ -1,6 +1,6 @@
+/* eslint-disable no-undef */
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { config } from '../config/config.js';
 
 import db from '../models/index.js';
 import { createUser } from '../services/user.service.js';
@@ -13,7 +13,7 @@ const register = async (req, res, next) => {
 
         const newUser = await createUser(userData);
         const token = jwt.sign(
-            { id: userData.id, username: userData.username }, config.jwtSecret, { expiresIn: '48h' }
+            { id: newUser.id, username: userData.username }, process.env.JWT_SECRET, { expiresIn: '48h' }
         );
         res
             .status(201)
@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
         }
 
         const token = jwt.sign(
-            {id:user.id, username:user.username}, config.jwtSecret, {expiresIn:'48h'}
+            {id:user.id, username:user.username}, process.env.JWT_SECRET, {expiresIn:'48h'}
         );
 
         res.status(200).json({message:'Login Successfull', token});

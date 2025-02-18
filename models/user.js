@@ -18,11 +18,10 @@ export default (sequelize, DataTypes) => {
         },
       },
       {
-        tableName: 'Users',
+        tableName: 'users',
         timestamps: true,
       }
     );
   
     return User;
   };
-  

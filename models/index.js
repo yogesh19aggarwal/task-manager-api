@@ -1,44 +1,40 @@
-import { Sequelize } from 'sequelize';
-import { config } from '../config/config.js';
+/* eslint-disable no-undef */
+import { Sequelize } from "sequelize";
+import configData from "../config/config.js";
 import UserModel from './user.js';
 import TaskModel from './task.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
+const env = process.env.NODE_ENV || "development";
+const config = configData[env];
 
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  {
-    host: config.host,
-    dialect: config.dialect,
-    port: config.dbPort,
-  }
-);
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect,
+  port:config.dbPort
+});
 
 const User = UserModel(sequelize, Sequelize.DataTypes);
 const Task = TaskModel(sequelize, Sequelize.DataTypes);
 
-User.hasMany(Task, { foreignKey: 'userId' });
-Task.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Task, { foreignKey: 'userId', as: 'tasks' });
+Task.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 const db = {
   sequelize,
+  Sequelize,
   User,
   Task,
 };
 
-(async () => {
-  try {
+(async ()=>{
+  try{
     await sequelize.authenticate();
-    console.log('Connected to the database.');
-
-    await sequelize.sync();
-    console.log('Database tables created or updated.');
-  } catch (error) {
-    console.error('Failed to connect or sync with database:', error.message);
+    console.log('Database connected');
+  } catch(err){
+    console.log('Failed to connect to the database', err.message);
+    
   }
 })();
+
 
 export default db;

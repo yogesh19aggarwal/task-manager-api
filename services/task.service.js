@@ -5,7 +5,7 @@ const Task = db.Task;
 
 // Create a new task
 export const createTaskForUser = async (userId, taskData) => {
-  return await db.Task.create({ ...taskData, userId });
+  return await Task.create({ ...taskData, userId });
 };
 
 // Get all tasks for the authenticated user (with filtering & sorting)
@@ -33,12 +33,14 @@ export const getAllTasksForUser = async (userId, filters) => {
   const pageSize = limit ? parseInt(limit) : 10;
   const offset = (pageNumber - 1) * pageSize;
 
-  return await db.Task.findAndCountAll({
+  const result = await Task.findAndCountAll({
     where,
     order: sortOptions,
     limit: pageSize,
     offset: offset,
   });
+  
+  return result;
 };
 
 export const getTaskByIdForUser = async (taskId, userId) => {

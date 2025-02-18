@@ -6,12 +6,12 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: DataTypes.TEXT,
+      description: { type: DataTypes.TEXT },
       priority: {
         type: DataTypes.ENUM('low', 'medium', 'high'),
         allowNull: false,
       },
-      dueDate: {
+      duedate: {
         type: DataTypes.DATE,
         allowNull: false,
       },
@@ -21,17 +21,31 @@ export default (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id',
         },
-        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     },
     {
-      tableName: 'Tasks',
+      tableName: 'tasks',
       timestamps: true,
       paranoid: true,
     }
