@@ -27,6 +27,12 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
+        if (!email.includes('@') || !email.includes('.') || email.indexOf('@') > email.lastIndexOf('.')) {
+            const error = new Error('Invalid email format.');
+            error.statusCode = 400;
+            throw error;
+        }
+
         const user = await User?.findOne({ where: { email } });
         if (!user) {
             const error = new Error('Invalid email id');

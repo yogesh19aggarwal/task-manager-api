@@ -11,21 +11,29 @@ export const createUser = async (inputData, next) => {
         throw new Error('All fields are required');
     }
 
-    try{
+    if (!email.includes('@') || !email.includes('.') || email.indexOf('@') > email.lastIndexOf('.')) {
+        const error = new Error('Invalid email format.');
+        error.statusCode = 400;
+        throw error;
+    }
+
+    try {
         const existingUser = await User.findOne({ where: { email } });
-        if(existingUser){
-            throw new Error('User already exist');
+        if (existingUser) {
+            const error = new Error('User already exists');
+            error.statusCode = 400;
+            throw error;
         }
-        
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        
+
         return await User.create({
             username,
             email,
-            password:hashedPassword,
+            password: hashedPassword,
         });
-    }
-    catch(err){
+    } catch (err) {
         next(err);
     }
 };
+
